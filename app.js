@@ -1,9 +1,21 @@
 const express = require('express')
+const morgan =  require('morgan');
+const favicon = require('serve-favicon');
 const { success} = require('./helper.js')
 let pokemons = require('./mock-pokemon');
 
 const app = express()
 const port = 3000
+
+//middleware crée par nous memes, logger qui affiche url dans le terminal
+// app.use((req, res, next) => {
+//     console.log(`URL : ${req.url}`)
+//     next()
+// })
+
+app
+.use(favicon(__dirname + '/favicon.ico'))
+.use(morgan("dev")) 
 
 app.get('/', (req,res) => res.send('Bonjour Express ! ;)'))
 
