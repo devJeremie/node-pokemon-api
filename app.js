@@ -6,6 +6,13 @@ const app = express()
 const port = 3000
 
 app.get('/', (req,res) => res.send('Bonjour Express ! ;)'))
+
+//on retourne la liste  de tous les Pokémons
+app.get('/api/pokemons', (req,res) => {
+    const message = 'La liste de tous les pokemons au format json'
+    res.json(success(message, pokemons))
+})
+
 //on va utiliser la liste de pokémons dans notre endPoint
 app.get('/api/pokemons/:id', (req, res) =>{
 const id = parseInt(req.params.id)
@@ -15,8 +22,8 @@ res.json(success(message, pokemon))
 })
 
 //Nouveau point de terminaison qui affiche le total de pokémon
-app.get('/api/pokemons', (req,res) => {
+/*app.get('/api/pokemons', (req,res) => {
     res.send(`Il y a ${pokemons.length} pokémons dans le pokédex pour le moment.`)
-})
+})*/
 
 app.listen(port, () => console.log(`Votre application Node est démarré sur : http://localhost:${port}`))
