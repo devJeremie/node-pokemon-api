@@ -48,14 +48,17 @@ app.post('/api/pokemons', (req,res) => {
     res.json(success(message, pokemonCreated))
 })
 
+// Request handler for updating a pokemon
 app.put('/api/pokemons/:id', (req, res) =>{
-    const id = parseInt(req.params.id)
-    const pokemonUpdated = { ...req.body, id: id}
-    pokemons = pokemons.map(pokemon =>{
-        return pokemon.id === id ? pokemonUpdated : pokemon
+    const id = parseInt(req.params.id)  // Get the pokemon id from the request
+    const pokemonUpdated = { ...req.body, id: id}  // Create a new pokemon object with updated information
+    pokemons = pokemons.map(pokemon =>{   // Iterate through the pokemons array
+        return pokemon.id === id ? pokemonUpdated : pokemon  // If the pokemon id matches, update it, otherwise keep it the same
     })
-    const message = `Le pokémon ${pokemonUpdated.name} à bien été modifié.`
-    res.json(success(message, pokemonUpdated))
+    const message = `Le pokémon ${pokemonUpdated.name} à bien été modifié.` // Create a success message
+    res.json(success(message, pokemonUpdated))  // Send the success message and updated pokemon object as a JSON response
 })
+
+
        
 app.listen(port, () => console.log(`Votre application Node est démarré sur : http://localhost:${port}`))
