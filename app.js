@@ -2,11 +2,30 @@ const express = require('express')
 const morgan =  require('morgan');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser')
+const { Sequelize } = require('sequelize')
 const { success, getUniqueId} = require('./helper.js')
 let pokemons = require('./mock-pokemon');
 
 const app = express()
 const port = 3000
+
+const sequelize = new Sequelize(
+    'pokedex',
+    'root',
+    '',
+    {
+        host: "localhost",
+        dialect: "mariadb",
+        dialectOptions: {
+            timezone: 'Etc/GMT-2'
+        },
+        logging: false
+    }
+)
+
+sequelize.authenticate()
+.then(_ => console.log('La connexion à la base de donnée a bien été établie.'))
+.catch (error => console.error(`Erreur lors de l\'authentification : ${error}`));
 
 //middleware crée par nous memes, logger qui affiche url dans le terminal
 // app.use((req, res, next) => {
@@ -59,6 +78,14 @@ app.put('/api/pokemons/:id', (req, res) =>{
     res.json(success(message, pokemonUpdated))  // Send the success message and updated pokemon object as a JSON response
 })
 
+// Request handler for deleting a pokemon
+app.delete('/api/pokemons/:id', (req, res) =>{
+    const id = parseInt(req.params.id)  // Get the pokemon id from the request
+    const pokemonDeleted = pokemons.find(pokemon => pokemon.id === id)  // Find the pokemon in the pokemons array
+    pokemons.filter(pokemon=> pokemon.id !== id)  // Filter the pokemons array to remove the pokemon with the specified id
+    const message = `Le pokémon ${pokemonDeleted.name} à bien été supprimé.`  // Create a success message
+    res.json(success(message, pokemonDeleted))
+})
 
        
 app.listen(port, () => console.log(`Votre application Node est démarré sur : http://localhost:${port}`))
