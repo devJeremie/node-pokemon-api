@@ -15,5 +15,6 @@ app
 sequelize.initDatabase()
 
 //On placera nos endPoint ici
+require('./src/routes/allPokemons')(app)
 
 app.listen(port, () => console.log(`Votre application Node est démarré sur : http://localhost:${port}`))
