@@ -26,7 +26,7 @@ const initDatabase = () => {
                 hp: pokemon.hp,
                 cp: pokemon.cp,
                 picture: pokemon.picture,
-                types: pokemon.types.join() // Types joined as string
+                types: pokemon.types // Types joined as string
             })
             .then(bulbizarre => console.log(bulbizarre.toJSON())) // Log created Pokemon
         })  
