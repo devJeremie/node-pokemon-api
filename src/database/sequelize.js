@@ -12,7 +12,7 @@ const sequelize = new Sequelize(
         dialectOptions: {
             timezone: 'Etc/GMT-2'
         },
-        logging: true
+        logging: false
     }
 )
 
@@ -28,7 +28,7 @@ const initDatabase = () => {
                 picture: pokemon.picture,
                 types: pokemon.types // Types joined as string
             })
-            .then(bulbizarre => console.log(bulbizarre.toJSON())) // Log created Pokemon
+            .then(pokemon => console.log(pokemon.toJSON())) // Log created Pokemon
         })  
         console.log('La bdd à bien été initialisé !!')
     })
