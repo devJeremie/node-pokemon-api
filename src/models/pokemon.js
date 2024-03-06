@@ -11,11 +11,19 @@ module.exports = (sequelize, Datatypes) => {
         },
         hp: {
             type: Datatypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt: { msg: `Utilisez uniquement des nombres entiers pour les hp.`},
+                notNull: { msg: `Les hp sont une propriété obligatoire.`}
+            }
         },
         cp: {
             type: Datatypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt: { msg: `Utilisez uniquement des nombres entiers pour les cp.`},
+                notNull: { msg: `Les cp sont une propriété obligatoire.`}
+            }
         },
         picture: {
             type: Datatypes.STRING,
