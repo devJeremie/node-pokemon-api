@@ -20,4 +20,16 @@ require('./src/routes/pokemonByPk')(app)
 require('./src/routes/createPokemon')(app)
 require('./src/routes/updatePokemon')(app)
 require('./src/routes/deletePokemon')(app)
+
+//Gestion des erreurs 
+app.use(( {res}) => {
+    const message = 'Page introuvable, essayer une autre route'
+    res.status(404).json({message})
+})
+
+app.use((error, req, res, next) => {
+    if (error.message) {
+        console.error(error.message)
+    }
+});
 app.listen(port, () => console.log(`Votre application Node est démarré sur : http://localhost:${port}`))
