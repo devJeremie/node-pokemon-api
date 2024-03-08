@@ -2,6 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize')
 const pokemons = require('./mock-pokemon')
 const PokemonModel = require("../models/pokemon")
 const UserModel = require( "../models/user")
+const bCrypt = require( 'bcrypt' )
 
 //create a new instance of sequelize
 const sequelize = new Sequelize(
@@ -33,16 +34,14 @@ const initDatabase = () => {
             })
             .then(pokemon => console.log(pokemon.toJSON())) // Log created Pokemon
         })  
-            User.create({
-                username:'jeremie',
-                password: 'test'
-            })
-            .then(user => console.log(user.toJSON()))
-
-        console.log('La bdd à bien été initialisé !!')
-    })
-}
-
-module.exports = {
-    initDatabase, Pokemon , User //permet de nous resservir de ces éléments ailleur dans notre code
-}
+        bCrypt.hash('test', 10)
+        .then(hash => User.create({ username: 'jeremie', password: hash }))
+        .then(user => console.log(user.toJSON()))
+    
+        console.log('La base de donnée a bien été initialisée !')
+      })
+    }
+    
+    module.exports = { 
+      initDatabase, Pokemon, User
+    }
