@@ -1,8 +1,10 @@
 const { Pokemon } = require("../database/sequelize")
+const auth = require ('../authentification/auth')
+
 
 //Récupere toute la liste des pokémons
 module.exports = (app) => {
-    app.get('/api/pokemons', (req, res) =>{
+    app.get('/api/pokemons', auth, (req, res) =>{
         Pokemon.findAll()
             .then(pokemons => {
                 const message = 'La liste des pokémons a bien été récupéré.'
